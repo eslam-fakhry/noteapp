@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+// import "../styles/globals.css";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import theme from "../theme";
 
