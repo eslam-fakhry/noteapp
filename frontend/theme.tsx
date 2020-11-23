@@ -69,6 +69,101 @@ const theme = extendTheme({
       900: "#120303",
     },
   },
+  components: {
+    Tags: {
+      parts: ["tags", "tag"],
+      baseStyle: {
+        tags: {},
+        tag: {
+        },
+      },
+      sizes: {
+        sm: {
+          tags: {
+            spacing: "2",
+          },
+          tag: {
+            py: "1",
+            px: "1",
+            fontSize: "xs",
+          },
+        },
+        md: {
+          tags: {
+            spacing: "3",
+          },
+          tag: {
+            py: "1",
+            px: "2",
+            fontSize: "sm",
+          },
+        },
+      },
+      defaultProps: {
+        size: "md",
+      },
+    },
+    NoteCard: {
+      parts: ["card", "date", "title", "excerpt"],
+      baseStyle: {
+        card: {
+          borderBottom: "1px",
+          borderColor: "secondary.200",
+        },
+        date: {
+          fontWeight: "light",
+          color: "secondary.400",
+        },
+        title: {
+          color: "secondary.700",
+        },
+        excerpt: {
+          color: "secondary.600",
+        },
+      },
+      sizes: {
+        sm: {
+          card: {
+            p: "2",
+            pt: "4",
+          },
+          date: {
+            pb: "1",
+            fontSize: "sm",
+          },
+          title: {
+            pb: "1",
+            fontSize: "sm",
+          },
+          excerpt: {
+            pb: "2",
+            fontSize: "xs",
+          },
+        },
+        md: {
+          card: {
+            p: "2",
+            pt: "4",
+          },
+          date: {
+            pb: "2",
+          },
+          title: {
+            pb: "2",
+            fontSize: "md",
+          },
+          excerpt: {
+            pb: "4",
+            fontSize: "md",
+          },
+        },
+      },
+      variants: {},
+      defaultProps: {
+        size: "md",
+      },
+    },
+  },
 });
 
 export default theme;

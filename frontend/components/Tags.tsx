@@ -1,15 +1,22 @@
+import { Tag, useMultiStyleConfig, Wrap, WrapItem } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
-import { HStack, Tag } from "@chakra-ui/react";
 
 interface Props {
   tags: string[];
+  size?: string;
 }
-export default function Tags({ tags }: Props): ReactElement {
+export default function Tags({ tags, size }: Props): ReactElement {
+  const styles: any = useMultiStyleConfig("Tags", { size });
+
+  const spacing = styles?.tags?.spacing || 3;
+
   return (
-    <HStack spacing="12px">
+    <Wrap spacing={spacing}>
       {tags.map((tag, i) => (
-        <Tag key={i}>{tag}</Tag>
+        <WrapItem key={i} as={Tag} sx={styles["tag"]}>
+          {tag}
+        </WrapItem>
       ))}
-    </HStack>
+    </Wrap>
   );
 }
