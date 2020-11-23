@@ -7,8 +7,8 @@ interface Props {
 export default function Tags({ tags }: Props): ReactElement {
   return (
     <HStack spacing="12px">
-      {tags.map((tag) => (
-        <Tag>{tag}</Tag>
+      {tags.map((tag, i) => (
+        <Tag key={i}>{tag}</Tag>
       ))}
     </HStack>
   );
