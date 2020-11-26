@@ -15,6 +15,7 @@ export default function Editor({}: Props): ReactElement {
     <ReactQuill
       theme="snow"
       value={value}
+      style={{ flexGrow: 1 }}
       onChange={(_content, _delta, _, editor) => {
         return setValue(editor.getContents());
       }}
