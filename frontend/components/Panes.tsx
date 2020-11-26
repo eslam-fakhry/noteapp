@@ -1,7 +1,12 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
+import dynamic from "next/dynamic";
 import React, { ReactElement, useState } from "react";
+import ContainerDimensions from "react-container-dimensions";
 import SplitPane from "react-split-pane";
-import NoteCard from "./NoteCard";
+import Cards from "./Cards";
+import SideMenu from "./SideMenu";
+
+const Editor = dynamic(() => import("../components/Editor"), { ssr: false });
 
 const PANE1_SMALL_SIZE = 50;
 const PANE1_LARGE_MIN_SIZE = 150;
@@ -18,7 +23,6 @@ const note = {
   tags: ["work", "upper", "game", "game", "game"],
 };
 
-
 export default function Panes({}: Props): ReactElement {
   const [pane1Size, setPane1Size] = useState(200);
 
@@ -30,6 +34,15 @@ export default function Panes({}: Props): ReactElement {
       );
     }
   };
+  let size: "sm" | "md" | "lg" = "md";
+  if (pane1Size <= PANE1_SMALL_SIZE) {
+    size = "sm";
+  } else if (pane1Size < PANE1_LARGE_MIN_SIZE) {
+    size = "md";
+  } else {
+    size = "lg";
+  }
+
   return (
     <Box
       as={SplitPane}
@@ -40,7 +53,8 @@ export default function Panes({}: Props): ReactElement {
       onDragFinished={snapPane1}
       onChange={(size) => setPane1Size(Number(size))}
     >
-      <div>Pane1</div>
+      <SideMenu size={size} />
+
       <SplitPane
         allowResize={true}
         split="vertical"
@@ -48,11 +62,12 @@ export default function Panes({}: Props): ReactElement {
         maxSize={300}
         defaultSize={200}
       >
-        <div>
-          <NoteCard size="sm" note={note} />
-          <NoteCard size="sm" note={note} />
-        </div>
-        <div>Pane3</div>
+        <ContainerDimensions>
+          {({ width }) => <Cards width={width} />}
+        </ContainerDimensions>
+        <Flex flexDir="column" h="100%">
+          <Editor />
+        </Flex>
       </SplitPane>
     </Box>
   );
