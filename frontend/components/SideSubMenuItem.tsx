@@ -5,9 +5,14 @@ import { IconType } from "react-icons";
 interface Props {
   icon: IconType;
   title: string;
+  onClick: () => void;
 }
 
-export default function SideSubMenuItem({ icon, title }: Props): ReactElement {
+export default function SideSubMenuItem({
+  icon,
+  title,
+  onClick,
+}: Props): ReactElement {
   return (
     <Flex
       alignItems="center"
@@ -16,6 +21,7 @@ export default function SideSubMenuItem({ icon, title }: Props): ReactElement {
       pl="12"
       cursor="pointer"
       _hover={{ bgColor: "primary.200" }}
+      onClick={onClick}
     >
       <Icon
         as={icon}

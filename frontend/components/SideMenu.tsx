@@ -1,16 +1,18 @@
 import { Avatar, Box, Divider, Text } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
 import { RiBook2Line, RiPriceTag3Line } from "react-icons/ri";
+import NotebooksSubMenu from "./NotebooksSubMenu";
+import SideMenuItem from "./SideMenuItem";
 import SideSubMenu from "./SideSubMenu";
 
-const items = [
+const tags = [
   {
     title: "work",
-    url: "/work",
+    action: () => {},
   },
   {
     title: "game",
-    url: "/game",
+    action: () => {},
   },
 ];
 
@@ -43,17 +45,13 @@ export default function SideMenu({ size }: Props): ReactElement {
         </Text>
       )}
       <Divider borderColor="primary.300" mb="5" />
-      <SideSubMenu
-        size={size}
-        title="Notebooks"
-        icon={RiBook2Line}
-        items={items}
-      />
+      <SideMenuItem icon={RiBook2Line} size={size} title="All Notes" />
+      <NotebooksSubMenu size={size} />
       <SideSubMenu
         size={size}
         title="Tags"
         icon={RiPriceTag3Line}
-        items={items}
+        items={tags}
       />
     </Box>
   );
