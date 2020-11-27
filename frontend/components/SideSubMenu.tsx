@@ -17,9 +17,10 @@ import { IconType } from "react-icons";
 import { RiArrowDownSLine } from "react-icons/ri";
 import SideSubMenuItem from "./SideSubMenuItem";
 
+// TODO: Add header to menus
 type SideMenuNavItem = {
   title: string;
-  url: string;
+  action: () => void;
   icon?: IconType;
 };
 
@@ -38,6 +39,7 @@ function MyIcon({ icon, size }: any) {
     <Icon
       as={icon}
       color="primary.400"
+      _groupHover={{ color: "primary.500" }}
       boxSize="1.2em"
       mr="2"
       ml={size === "lg" ? 0 : 2}
@@ -57,8 +59,10 @@ export default function SideSubMenu({
   icon,
   items,
   size,
+
 }: Props): ReactElement {
   const { isOpen, onToggle } = useDisclosure();
+
 
   const animation = `${
     isOpen ? openAnimation : closeAnimation
@@ -68,19 +72,22 @@ export default function SideSubMenu({
     <>
       <Flex
         alignItems="center"
-        // px="2"
+        role="group"
         py={size !== "lg" ? 1 : 1}
         cursor="pointer"
         onClick={() => size === "lg" && onToggle()}
+        _hover={{ bgColor: size !== "lg" ? "" : "primary.200" }}
       >
         {size === "lg" && (
           <Icon
             as={RiArrowDownSLine}
             animation={animation}
             color="primary.400"
+            _groupHover={{ color: "primary.500" }}
             mr="1"
           />
         )}
+
         {size === "lg" ? (
           <MyIcon size={size} icon={icon} />
         ) : (
@@ -94,13 +101,22 @@ export default function SideSubMenu({
             />
             <MenuList>
               {items.map((item, index) => (
-                <MenuItem key={index}>{item.title}</MenuItem>
+                <MenuItem key={index} onClick={item.action}>
+                  {item.title}
+                </MenuItem>
               ))}
             </MenuList>
           </Menu>
         )}
+
         {size === "lg" && (
-          <Text flex="1" fontSize="sm" fontWeight="bold" color="primary.300">
+          <Text
+            flex="1"
+            fontSize="sm"
+            fontWeight="bold"
+            color="primary.300"
+            _groupHover={{ color: "primary.600" }}
+          >
             {title}
           </Text>
         )}
@@ -113,6 +129,7 @@ export default function SideSubMenu({
               key={index}
               icon={item.icon || icon}
               title={item.title}
+              onClick={item.action}
             />
           ))}
         </Box>
