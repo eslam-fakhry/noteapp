@@ -12,37 +12,38 @@ import {
 } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
 import { RiAlarmLine, RiBook2Line, RiStickyNoteLine } from "react-icons/ri";
+import { connect } from "react-redux";
+import { Notebook } from "../redux/notebooks/types";
+import { NoteDescription } from "../redux/notes/types";
+import { RootState } from "../redux/rootReducer";
+import {
+  getCurrentNotebook,
+  getNotebookNoteDescriptions,
+} from "../redux/selectors";
 import FilterPopover from "./FilterPopover";
 import NoteCard from "./NoteCard";
 import SortMenu from "./SortMenu";
 
 interface Props {
   width: number;
+  notes: NoteDescription[];
+  notebook: Notebook;
 }
 
-const note = {
-  id: 1,
-  title: "First lesson of first notebook",
-  excerpt:
-    "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi, facilis blanditi...",
-  createdAt: "3:50 PM",
-  tags: ["work", "upper", "game", "game", "game"],
-};
-
-export default function Cards({ width }: Props): ReactElement {
+export function Cards({ width, notes, notebook }: Props): ReactElement {
   let size: "sm" | "md" | "lg" = width <= 220 ? "sm" : "md";
 
   return (
-    <Box>
+    <Box bgColor="secondary.100" h="100%">
       <Box bgColor="primary.100">
         <Flex alignItems="center" p="4">
           <Icon as={RiBook2Line} mr="2" color="primary.400" />
           <Tooltip
-            label="A Very long long notebook name"
+            label={notebook.name}
             aria-label="Notebook name"
           >
             <Heading isTruncated fontSize="xl" textColor="primary.600">
-              A Very long long notebook name
+            {notebook.name}
             </Heading>
           </Tooltip>
         </Flex>
@@ -94,16 +95,24 @@ export default function Cards({ width }: Props): ReactElement {
         </TabList>
         <TabPanels>
           <TabPanel p="0">
-            <NoteCard size="sm" note={note} />
-            <NoteCard size="sm" note={note} />
+            {notes.map((note) => (
+              <NoteCard key={note.id} size="sm" note={note} />
+            ))}
           </TabPanel>
           <TabPanel p="0">
-            <NoteCard size="sm" note={note} />
-            <NoteCard size="sm" note={note} />
-            <NoteCard size="sm" note={note} />
+            {notes.map((note) => (
+              <NoteCard key={note.id} size="sm" note={note} />
+            ))}
           </TabPanel>
         </TabPanels>
       </Tabs>
     </Box>
   );
 }
+
+const mapStateToProps = (state: RootState) => ({
+  notebook: getCurrentNotebook(state),
+  notes: getNotebookNoteDescriptions(state),
+});
+
+export default connect(mapStateToProps)(Cards);
