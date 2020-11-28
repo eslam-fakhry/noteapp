@@ -5,6 +5,7 @@ import { ImBooks } from "react-icons/im";
 import { RiPriceTag3Line } from "react-icons/ri";
 import { connect } from "react-redux";
 import { setCurrentNotebook } from "../redux/notebooks/notebooksSlice";
+import { RootState } from "../redux/rootReducer";
 import NotebooksSubMenu from "./NotebooksSubMenu";
 import SideMenuItem from "./SideMenuItem";
 
@@ -21,10 +22,15 @@ const tags = [
 
 interface Props {
   size: "sm" | "md" | "lg";
+  currentNotebook: number | null;
   setCurrentNotebook: ActionCreatorWithPayload<any, string>;
 }
 
-export function SideMenu({ size, setCurrentNotebook }: Props): ReactElement {
+export function SideMenu({
+  size,
+  currentNotebook,
+  setCurrentNotebook,
+}: Props): ReactElement {
   let avatarSize = "";
   if (size === "sm") {
     avatarSize = "34px";
@@ -54,6 +60,7 @@ export function SideMenu({ size, setCurrentNotebook }: Props): ReactElement {
         title="All Notes"
         icon={ImBooks}
         onClick={() => setCurrentNotebook(null)}
+        active={currentNotebook === null}
       />
       <NotebooksSubMenu size={size} />
       <SideMenuItem
@@ -67,8 +74,11 @@ export function SideMenu({ size, setCurrentNotebook }: Props): ReactElement {
   );
 }
 
+const mapStateToProp = (state: RootState) => ({
+  currentNotebook: state.notebooks.currentNotebook,
+});
 const mapDispatchToProp = {
   setCurrentNotebook,
 };
 
-export default connect(null, mapDispatchToProp)(SideMenu);
+export default connect(mapStateToProp, mapDispatchToProp)(SideMenu);

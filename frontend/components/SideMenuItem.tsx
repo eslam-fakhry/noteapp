@@ -21,6 +21,7 @@ type SideMenuNavItem = {
   title: string;
   action: () => void;
   icon?: IconType;
+  active?: boolean;
 };
 
 interface Props {
@@ -30,6 +31,7 @@ interface Props {
   size: "sm" | "md" | "lg";
   isMenu?: boolean;
   onClick?: () => void;
+  active?: boolean;
 }
 
 export default function SideMenuItem({
@@ -39,6 +41,7 @@ export default function SideMenuItem({
   size,
   isMenu,
   onClick,
+  active,
 }: Props): ReactElement {
   const { isOpen, onToggle } = useDisclosure();
   const isSize = (sizeArg: "sm" | "md" | "lg") => size === sizeArg;
@@ -51,7 +54,7 @@ export default function SideMenuItem({
       <IconButton
         aria-label="MenuItem"
         icon={renderMainIcon()}
-        bgColor="transparent"
+        bgColor={active ? "primary.200" : "transparent"}
         pr="2"
         ml="1"
       />
@@ -85,6 +88,7 @@ export default function SideMenuItem({
               icon={item.icon || icon}
               title={item.title}
               onClick={item.action}
+              active={item.active}
             />
           ))}
         </Box>
@@ -96,7 +100,7 @@ export default function SideMenuItem({
       <MenuButton
         as={IconButton}
         icon={renderMainIcon()}
-        bgColor="transparent"
+        bgColor={active ? "primary.200" : "transparent"}
         pr="2"
         ml="1"
       />
@@ -116,7 +120,7 @@ export default function SideMenuItem({
     return (
       <Icon
         as={icon}
-        color="primary.400"
+        color={!isMenu && active ? "primary.500" : "primary.400"}
         _groupHover={{ color: "primary.500" }}
         boxSize="1.2em"
         mr="2"
@@ -130,7 +134,7 @@ export default function SideMenuItem({
       flex="1"
       fontSize="sm"
       fontWeight="bold"
-      color="primary.300"
+      color={!isMenu && active ? "primary.600" : "primary.300"}
       _groupHover={{ color: "primary.600" }}
     >
       {title}
@@ -139,7 +143,7 @@ export default function SideMenuItem({
 
   const clickHandler = () => {
     onClick && onClick();
-    isMenu && size === "lg" && onToggle();
+    isMenu && isSize("lg") && onToggle();
   };
 
   return (
@@ -150,9 +154,12 @@ export default function SideMenuItem({
         py={size !== "lg" ? 1 : 1}
         cursor="pointer"
         onClick={clickHandler}
-        _hover={{ bgColor: size !== "lg" ? "" : "primary.200" }}
+        bgColor={
+          !isMenu && active && isSize("lg") ? "primary.200" : "transparent"
+        }
+        _hover={{ bgColor: !isSize("lg") ? "" : "primary.200" }}
       >
-        {size === "lg" ? renderLargeSize() : renderSmallSize()}
+        {isSize("lg") ? renderLargeSize() : renderSmallSize()}
       </Flex>
       {renderCollapse()}
     </>

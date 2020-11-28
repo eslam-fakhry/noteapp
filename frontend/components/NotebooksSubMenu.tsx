@@ -10,17 +10,20 @@ import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 interface Props {
   size: "sm" | "md" | "lg";
   notebooks: Notebook[];
+  currentNotebook: number | null;
   setCurrentNotebook: ActionCreatorWithPayload<any, string>;
 }
 
 export function NotebooksSubMenu({
   size,
   notebooks,
+  currentNotebook,
   setCurrentNotebook,
 }: Props): ReactElement {
   const items = notebooks.map((nb) => ({
     title: nb.name,
     action: () => setCurrentNotebook(nb.id),
+    active: currentNotebook === nb.id
   }));
 
   return (
@@ -30,12 +33,14 @@ export function NotebooksSubMenu({
       icon={RiBook2Line}
       items={items}
       isMenu
+      active={currentNotebook !== null}
     />
   );
 }
 
 const mapStateToProps = (state: RootState) => ({
   notebooks: state.notebooks.notebooks,
+  currentNotebook: state.notebooks.currentNotebook,
 });
 
 const mapDispatchToProps = {
