@@ -32,7 +32,7 @@ interface Props {
   onClick?: () => void;
 }
 
-export default function SideSubMenu({
+export default function SideMenuItem({
   title,
   icon,
   items,
@@ -43,7 +43,7 @@ export default function SideSubMenu({
   const { isOpen, onToggle } = useDisclosure();
   const isSize = (sizeArg: "sm" | "md" | "lg") => size === sizeArg;
 
-  const renderSmallSize = () => {
+  const renderSmallSize = (): JSX.Element => {
     if (isMenu) {
       return renderMenu();
     }
@@ -58,7 +58,7 @@ export default function SideSubMenu({
     );
   };
 
-  const renderLargeSize = () => {
+  const renderLargeSize = (): JSX.Element => {
     if (isMenu) {
       return (
         <>
@@ -91,7 +91,7 @@ export default function SideSubMenu({
       </Collapse>
     );
 
-  const renderMenu = () => (
+  const renderMenu = (): JSX.Element => (
     <Menu>
       <MenuButton
         as={IconButton}
@@ -110,7 +110,7 @@ export default function SideSubMenu({
     </Menu>
   );
 
-  const renderMainIcon = () => {
+  const renderMainIcon = (): JSX.Element => {
     const ml = isMenu ? 0 : 5;
 
     return (
@@ -125,7 +125,7 @@ export default function SideSubMenu({
     );
   };
 
-  const renderTitle = () => (
+  const renderTitle = (): JSX.Element => (
     <Text
       flex="1"
       fontSize="sm"

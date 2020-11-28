@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { connect } from "react-redux";
-import SideSubMenu from "./SideSubMenu";
+import SideMenuItem from "./SideMenuItem";
 import { RiBook2Line, RiPriceTag3Line } from "react-icons/ri";
 import { RootState } from "../redux/rootReducer";
 import { setCurrentNotebook } from "../redux/notebooks/notebooksSlice";
@@ -24,7 +24,7 @@ export function NotebooksSubMenu({
   }));
 
   return (
-    <SideSubMenu
+    <SideMenuItem
       size={size}
       title="Notebooks"
       icon={RiBook2Line}

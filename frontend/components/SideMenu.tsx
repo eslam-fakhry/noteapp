@@ -6,7 +6,7 @@ import { RiPriceTag3Line } from "react-icons/ri";
 import { connect } from "react-redux";
 import { setCurrentNotebook } from "../redux/notebooks/notebooksSlice";
 import NotebooksSubMenu from "./NotebooksSubMenu";
-import SideSubMenu from "./SideSubMenu";
+import SideMenuItem from "./SideMenuItem";
 
 const tags = [
   {
@@ -49,14 +49,14 @@ export function SideMenu({ size, setCurrentNotebook }: Props): ReactElement {
         </Text>
       )}
       <Divider borderColor="primary.300" mb="5" />
-      <SideSubMenu
+      <SideMenuItem
         size={size}
         title="All Notes"
         icon={ImBooks}
         onClick={() => setCurrentNotebook(null)}
       />
       <NotebooksSubMenu size={size} />
-      <SideSubMenu
+      <SideMenuItem
         size={size}
         title="Tags"
         icon={RiPriceTag3Line}
