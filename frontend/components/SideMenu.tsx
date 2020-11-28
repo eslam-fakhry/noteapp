@@ -1,8 +1,11 @@
 import { Avatar, Box, Divider, Text } from "@chakra-ui/react";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import React, { ReactElement } from "react";
-import { RiBook2Line, RiPriceTag3Line } from "react-icons/ri";
+import { ImBooks } from "react-icons/im";
+import { RiPriceTag3Line } from "react-icons/ri";
+import { connect } from "react-redux";
+import { setCurrentNotebook } from "../redux/notebooks/notebooksSlice";
 import NotebooksSubMenu from "./NotebooksSubMenu";
-import SideMenuItem from "./SideMenuItem";
 import SideSubMenu from "./SideSubMenu";
 
 const tags = [
@@ -18,9 +21,10 @@ const tags = [
 
 interface Props {
   size: "sm" | "md" | "lg";
+  setCurrentNotebook: ActionCreatorWithPayload<any, string>;
 }
 
-export default function SideMenu({ size }: Props): ReactElement {
+export function SideMenu({ size, setCurrentNotebook }: Props): ReactElement {
   let avatarSize = "";
   if (size === "sm") {
     avatarSize = "34px";
@@ -45,14 +49,26 @@ export default function SideMenu({ size }: Props): ReactElement {
         </Text>
       )}
       <Divider borderColor="primary.300" mb="5" />
-      <SideMenuItem icon={RiBook2Line} size={size} title="All Notes" />
+      <SideSubMenu
+        size={size}
+        title="All Notes"
+        icon={ImBooks}
+        onClick={() => setCurrentNotebook(null)}
+      />
       <NotebooksSubMenu size={size} />
       <SideSubMenu
         size={size}
         title="Tags"
         icon={RiPriceTag3Line}
         items={tags}
+        isMenu
       />
     </Box>
   );
 }
+
+const mapDispatchToProp = {
+  setCurrentNotebook,
+};
+
+export default connect(null, mapDispatchToProp)(SideMenu);

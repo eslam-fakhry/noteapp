@@ -29,6 +29,7 @@ export function NotebooksSubMenu({
       title="Notebooks"
       icon={RiBook2Line}
       items={items}
+      isMenu
     />
   );
 }
